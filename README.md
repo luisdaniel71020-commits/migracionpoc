@@ -22,7 +22,7 @@ Este proyecto implementa:
 '''env
 PROJECT_ID=migracionpoc
 DATASET=migration_poc
-API_KEY=supersecreta123
+API_KEY=APIKEY
 DRY_RUN=true
 '''
 
@@ -39,13 +39,13 @@ docker compose up --build
 
 Todos los endpoints requieren un API Key en el header HTTP:
 
-x-api-key: supersecreta123
+x-api-key: APIKEY
 
 ## Ejemplos de uso
 
 1. Verificar que la API responde
 
-curl -H "x-api-key: supersecreta123" http://localhost:5000/
+curl -H "x-api-key: APIKEY" http://localhost:5000/
 
 Respuesta esperada:
 { "message": "API de Migración funcionando" }
@@ -54,7 +54,7 @@ Respuesta esperada:
 
 curl -X POST http://localhost:5000/ingest \
   -H "Content-Type: application/json" \
-  -H "x-api-key: supersecreta123" \
+  -H "x-api-key: APIKEY" \
   -d '{
         "table": "departments",
         "records": [
@@ -73,16 +73,17 @@ Respuesta esperada:
 
 curl -X POST http://localhost:5000/backup/departments \
   -H "Content-Type: application/json" \
-  -H "x-api-key: supersecreta123" \
+  -H "x-api-key: APIKEY" \
   -d '{ "target": "local", "local_path": "/tmp/departments.parquet" }'
 
 4. Restore desde archivo local
 
 curl -X POST http://localhost:5000/restore/departments \
   -H "Content-Type: application/json" \
-  -H "x-api-key: supersecreta123" \
+  -H "x-api-key: APIKEY" \
   -d '{ "source": "local", "local_path": "/tmp/departments.parquet" }'
 
 ## Parar los servicios
 
 docker compose down
+
