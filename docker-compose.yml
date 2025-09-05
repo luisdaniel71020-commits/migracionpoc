@@ -1,0 +1,25 @@
+services:
+  etl:
+    build: .
+    container_name: etl_historico
+    volumes:
+      - ./migracionpoc-d50b7889462e.json:/app/credentials.json:ro
+    env_file:
+      - .env
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+    command: python /app/src/etl_historico.py
+
+  api:
+    build: .
+    container_name: api_migracion
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./migracionpoc-d50b7889462e.json:/app/credentials.json:ro
+      - ./backups:/tmp 
+    env_file:
+      - .env
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+    command: python /app/src/api.py
