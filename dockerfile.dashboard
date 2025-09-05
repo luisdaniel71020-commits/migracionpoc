@@ -1,0 +1,32 @@
+# Imagen base ligera con Python 3.10
+FROM python:3.10-slim
+
+# Evitar que Python guarde .pyc y habilitar logs inmediatos
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Copiar requirements (añade streamlit, plotly, requests)
+COPY src/requirements.txt ./requirements.txt
+
+# Instalar dependencias del sistema necesarias
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependencias Python
+RUN pip install --no-cache-dir -r requirements.txt db-dtypes
+RUN pip install --no-cache-dir streamlit plotly requests python-dotenv pandas
+
+# Copiar el código del dashboard
+COPY src/dashboard.py ./dashboard.py
+COPY .env .
+
+# Exponer el puerto 4000
+EXPOSE 4000
+
+# Ejecutar Streamlit
+CMD ["streamlit", "run", "dashboard.py", "--server.port=4000", "--server.address=0.0.0.0", "--server.enableCORS=false"]
