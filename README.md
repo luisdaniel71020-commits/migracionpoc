@@ -83,7 +83,13 @@ curl -X POST http://localhost:5000/restore/departments \
   -H "x-api-key: APIKEY" \
   -d '{ "source": "local", "local_path": "/tmp/departments.parquet" }'
 
+## Dashboard de informacion
+
+Una vez esten corriendo los servicios con docker-compose up, puedes visitar el dashboard de datos de contratación en
+http://localhost:4000/
+
 ## Parar los servicios
 
 docker compose down
+
 
