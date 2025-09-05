@@ -23,3 +23,19 @@ services:
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
     command: python /app/src/api.py
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dockerfile.dashboard
+    container_name: dashboard_migracion
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    environment:
+      - API_URL=http://api:5000
+    depends_on:
+      - api
+  
+
