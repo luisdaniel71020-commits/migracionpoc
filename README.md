@@ -83,6 +83,45 @@ curl -X POST http://localhost:5000/restore/departments \
   -H "x-api-key: APIKEY" \
   -d '{ "source": "local", "local_path": "/tmp/departments.parquet" }'
 
+5. Contrataciones por trimestre (hired_by_quarter)
+
+curl -H "x-api-key: supersecreta123" \
+     http://localhost:5000/analytics/hired_by_quarter/2025
+
+Respuesta esperada:
+
+[
+  {
+    "department": "HR",
+    "job": "Manager",
+    "Q1": 2,
+    "Q2": 1,
+    "Q3": 0,
+    "Q4": 3
+  },
+  {
+    "department": "IT",
+    "job": "Developer",
+    "Q1": 5,
+    "Q2": 2,
+    "Q3": 1,
+    "Q4": 4
+  }
+]
+
+6. Departamentos con contrataciones sobre el promedio (departments_above_average)
+
+curl -H "x-api-key: supersecreta123" \
+     http://localhost:5000/analytics/departments_above_average/2025
+
+Respuesta esperada:
+
+[
+  { "ID": 2, "Department": "IT", "Hired": 12 },
+  { "ID": 1, "Department": "HR", "Hired": 6 }
+]
+
+
 ## Dashboard de informacion
 
 Una vez esten corriendo los servicios con docker-compose up, puedes visitar el dashboard de datos de contratación en
